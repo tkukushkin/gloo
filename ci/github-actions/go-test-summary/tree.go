@@ -69,6 +69,8 @@ func (m *multitree) pushString(s string, ev *event) {
 	})
 }
 
+// newSubtreeFromString takes a string test path and splits it into constituent
+// parts, creating a new subtree from the root of the test path.
 func (m *multitree) newSubtreeFromString(s string, ev *event) *tree {
 	newTree := &tree{
 		root: &node{
@@ -99,13 +101,19 @@ func (t *tree) leafNodes() []*node {
 }
 
 func (t *tree) leafNodesRec(n *node) []*node {
-	result := []*node{}
+	// check if we have reached a leaf node (node with no children)
 	if len(n.children) == 0 {
 		return []*node{n}
 	}
+
+	result := []*node{}
+
+	// since this node has children, keep recursing and aggregating any
+	// leaf nodes we find.
 	for _, child := range n.children {
 		result = append(result, t.leafNodesRec(child)...)
 	}
+
 	return result
 }
 
@@ -116,13 +124,10 @@ func (t *tree) insert(p *pathWithEvent) {
 	if t.root == nil {
 		panic("root should never be nil; construct tree with newSubtreeFromString")
 	}
-	t.insertRec(t.root, p, 0)
+	t.insertRec(t.root, p)
 }
 
-func (t *tree) insertRec(n *node, p *pathWithEvent, depth int) *node {
-	if depth > 10 {
-		panic("recursion fail")
-	}
+func (t *tree) insertRec(n *node, p *pathWithEvent) *node {
 	// we have reached the leaf; return the node we are at
 	if len(p.path) == 0 {
 		return n
@@ -151,5 +156,5 @@ func (t *tree) insertRec(n *node, p *pathWithEvent, depth int) *node {
 	return t.insertRec(child, &pathWithEvent{
 		path: p.path[1:],
 		ev:   p.ev,
-	}, depth+1)
+	})
 }
