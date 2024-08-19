@@ -12,6 +12,7 @@ weight: 5
 
 
 - [JwtStagedVhostExtension](#jwtstagedvhostextension)
+- [JwtStagedRouteProvidersExtension](#jwtstagedrouteprovidersextension)
 - [JwtStagedRouteExtension](#jwtstagedrouteextension)
 - [VhostExtension](#vhostextension)
 - [RouteExtension](#routeextension)
@@ -47,6 +48,25 @@ weight: 5
 | ----- | ---- | ----------- | 
 | `beforeExtAuth` | [.jwt.options.gloo.solo.io.VhostExtension](../jwt.proto.sk/#vhostextension) | JWT Virtual host config for the JWT filter that runs before the extauth filter. |
 | `afterExtAuth` | [.jwt.options.gloo.solo.io.VhostExtension](../jwt.proto.sk/#vhostextension) | JWT Virtual host config for the JWT filter that runs after the extauth filter. |
+
+
+
+
+---
+### JwtStagedRouteProvidersExtension
+
+
+
+```yaml
+"beforeExtAuth": .jwt.options.gloo.solo.io.VhostExtension
+"afterExtAuth": .jwt.options.gloo.solo.io.VhostExtension
+
+```
+
+| Field | Type | Description |
+| ----- | ---- | ----------- | 
+| `beforeExtAuth` | [.jwt.options.gloo.solo.io.VhostExtension](../jwt.proto.sk/#vhostextension) | JWT route config for the JWT filter that runs after the extauth filter. |
+| `afterExtAuth` | [.jwt.options.gloo.solo.io.VhostExtension](../jwt.proto.sk/#vhostextension) | JWT route config for the JWT filter that runs after the extauth filter. |
 
 
 

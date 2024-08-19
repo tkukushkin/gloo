@@ -22,6 +22,15 @@ message JwtStagedVhostExtension {
     VhostExtension after_ext_auth = 2;
 }
 
+message JwtStagedRouteProvidersExtension {
+
+    // JWT route config for the JWT filter that runs after the extauth filter.
+    VhostExtension before_ext_auth = 1;
+
+    // JWT route config for the JWT filter that runs after the extauth filter.
+    VhostExtension after_ext_auth = 2;
+}
+
 message JwtStagedRouteExtension {
 
     // JWT route config for the JWT filter that runs after the extauth filter.
