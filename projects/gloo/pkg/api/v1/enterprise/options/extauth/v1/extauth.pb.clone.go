@@ -896,11 +896,7 @@ func (m *OidcAuthorizationCode) Clone() proto.Message {
 		target.ClientAuthentication = proto.Clone(m.GetClientAuthentication()).(*OidcAuthorizationCode_ClientAuthentication)
 	}
 
-	if h, ok := interface{}(m.GetFrontChannelLogout()).(clone.Cloner); ok {
-		target.FrontChannelLogout = h.Clone().(*OidcAuthorizationCode_FrontChannelLogout)
-	} else {
-		target.FrontChannelLogout = proto.Clone(m.GetFrontChannelLogout()).(*OidcAuthorizationCode_FrontChannelLogout)
-	}
+	target.FrontChannelLogoutPath = m.GetFrontChannelLogoutPath()
 
 	switch m.Provider.(type) {
 
@@ -2599,21 +2595,6 @@ func (m *OidcAuthorizationCode_Azure) Clone() proto.Message {
 }
 
 // Clone function
-func (m *OidcAuthorizationCode_FrontChannelLogout) Clone() proto.Message {
-	var target *OidcAuthorizationCode_FrontChannelLogout
-	if m == nil {
-		return target
-	}
-	target = &OidcAuthorizationCode_FrontChannelLogout{}
-
-	target.LogoutUri = m.GetLogoutUri()
-
-	target.ExtraQueryParams = m.GetExtraQueryParams()
-
-	return target
-}
-
-// Clone function
 func (m *OidcAuthorizationCode_ClientAuthentication_ClientSecret) Clone() proto.Message {
 	var target *OidcAuthorizationCode_ClientAuthentication_ClientSecret
 	if m == nil {
@@ -3190,11 +3171,7 @@ func (m *ExtAuthConfig_OidcAuthorizationCodeConfig) Clone() proto.Message {
 		target.IdentityToken = proto.Clone(m.GetIdentityToken()).(*ExtAuthConfig_OidcAuthorizationCodeConfig_IdentityToken)
 	}
 
-	if h, ok := interface{}(m.GetFrontChannelLogout()).(clone.Cloner); ok {
-		target.FrontChannelLogout = h.Clone().(*ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout)
-	} else {
-		target.FrontChannelLogout = proto.Clone(m.GetFrontChannelLogout()).(*ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout)
-	}
+	target.FrontChannelLogoutPath = m.GetFrontChannelLogoutPath()
 
 	switch m.Provider.(type) {
 
@@ -4055,21 +4032,6 @@ func (m *ExtAuthConfig_OidcAuthorizationCodeConfig_Azure) Clone() proto.Message 
 	} else {
 		target.ClaimsCachingOptions = proto.Clone(m.GetClaimsCachingOptions()).(*RedisOptions)
 	}
-
-	return target
-}
-
-// Clone function
-func (m *ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout) Clone() proto.Message {
-	var target *ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout
-	if m == nil {
-		return target
-	}
-	target = &ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout{}
-
-	target.LogoutUri = m.GetLogoutUri()
-
-	target.ExtraQueryParams = m.GetExtraQueryParams()
 
 	return target
 }
