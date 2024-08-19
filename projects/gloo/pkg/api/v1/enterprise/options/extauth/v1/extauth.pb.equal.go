@@ -1509,6 +1509,10 @@ func (m *OidcAuthorizationCode) Equal(that interface{}) bool {
 		}
 	}
 
+	if strings.Compare(m.GetFrontChannelLogoutUri(), target.GetFrontChannelLogoutUri()) != 0 {
+		return false
+	}
+
 	switch m.Provider.(type) {
 
 	case *OidcAuthorizationCode_Default_:
@@ -5385,6 +5389,10 @@ func (m *ExtAuthConfig_OidcAuthorizationCodeConfig) Equal(that interface{}) bool
 		if !proto.Equal(m.GetIdentityToken(), target.GetIdentityToken()) {
 			return false
 		}
+	}
+
+	if strings.Compare(m.GetFrontChannelLogoutUri(), target.GetFrontChannelLogoutUri()) != 0 {
+		return false
 	}
 
 	switch m.Provider.(type) {

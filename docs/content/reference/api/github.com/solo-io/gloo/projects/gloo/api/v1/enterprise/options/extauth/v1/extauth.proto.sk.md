@@ -1058,6 +1058,7 @@ Map a single claim from an OAuth2 or OIDC token to a header in the request to th
 "clientAuthentication": .enterprise.gloo.solo.io.OidcAuthorizationCode.ClientAuthentication
 "default": .enterprise.gloo.solo.io.OidcAuthorizationCode.Default
 "azure": .enterprise.gloo.solo.io.OidcAuthorizationCode.Azure
+"frontChannelLogoutUri": string
 
 ```
 
@@ -1089,6 +1090,7 @@ Map a single claim from an OAuth2 or OIDC token to a header in the request to th
 | `clientAuthentication` | [.enterprise.gloo.solo.io.OidcAuthorizationCode.ClientAuthentication](../extauth.proto.sk/#clientauthentication) | +kubebuilder:validation:XValidation:rule="has(self.clientSecret) || has(self.privateKeyJwt)",message="Must specify clientSecret or privateKeyJwt". |
 | `default` | [.enterprise.gloo.solo.io.OidcAuthorizationCode.Default](../extauth.proto.sk/#default) |  Only one of `default` or `azure` can be set. |
 | `azure` | [.enterprise.gloo.solo.io.OidcAuthorizationCode.Azure](../extauth.proto.sk/#azure) |  Only one of `azure` or `default` can be set. |
+| `frontChannelLogoutUri` | `string` |  |
 
 
 
@@ -2277,6 +2279,7 @@ Deprecated, prefer OAuth2Config
 "identityToken": .enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.IdentityToken
 "default": .enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.Default
 "azure": .enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.Azure
+"frontChannelLogoutUri": string
 
 ```
 
@@ -2307,6 +2310,7 @@ Deprecated, prefer OAuth2Config
 | `identityToken` | [.enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.IdentityToken](../extauth.proto.sk/#identitytoken) | Optional: Configuration specific to the OIDC identity token received and processed by the ext-auth-service. |
 | `default` | [.enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.Default](../extauth.proto.sk/#default) |  Only one of `default` or `azure` can be set. |
 | `azure` | [.enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.Azure](../extauth.proto.sk/#azure) |  Only one of `azure` or `default` can be set. |
+| `frontChannelLogoutUri` | `string` |  |
 
 
 

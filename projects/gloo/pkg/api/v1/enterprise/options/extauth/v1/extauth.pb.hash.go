@@ -1694,6 +1694,10 @@ func (m *OidcAuthorizationCode) Hash(hasher hash.Hash64) (uint64, error) {
 		}
 	}
 
+	if _, err = hasher.Write([]byte(m.GetFrontChannelLogoutUri())); err != nil {
+		return 0, err
+	}
+
 	switch m.Provider.(type) {
 
 	case *OidcAuthorizationCode_Default_:
@@ -5979,6 +5983,10 @@ func (m *ExtAuthConfig_OidcAuthorizationCodeConfig) Hash(hasher hash.Hash64) (ui
 				return 0, err
 			}
 		}
+	}
+
+	if _, err = hasher.Write([]byte(m.GetFrontChannelLogoutUri())); err != nil {
+		return 0, err
 	}
 
 	switch m.Provider.(type) {

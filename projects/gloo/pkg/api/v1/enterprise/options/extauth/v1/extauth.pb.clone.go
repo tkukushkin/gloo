@@ -896,6 +896,8 @@ func (m *OidcAuthorizationCode) Clone() proto.Message {
 		target.ClientAuthentication = proto.Clone(m.GetClientAuthentication()).(*OidcAuthorizationCode_ClientAuthentication)
 	}
 
+	target.FrontChannelLogoutUri = m.GetFrontChannelLogoutUri()
+
 	switch m.Provider.(type) {
 
 	case *OidcAuthorizationCode_Default_:
@@ -3168,6 +3170,8 @@ func (m *ExtAuthConfig_OidcAuthorizationCodeConfig) Clone() proto.Message {
 	} else {
 		target.IdentityToken = proto.Clone(m.GetIdentityToken()).(*ExtAuthConfig_OidcAuthorizationCodeConfig_IdentityToken)
 	}
+
+	target.FrontChannelLogoutUri = m.GetFrontChannelLogoutUri()
 
 	switch m.Provider.(type) {
 
