@@ -858,7 +858,15 @@ message OidcAuthorizationCode {
         RedisOptions claims_caching_options = 4;
     }
 
-    string front_channel_logout_uri = 28;
+    message FrontChannelLogout {
+        // If set, the front channel logout endpoint will be used to log out the user.
+        // This is the URL that the user will be redirected to after logging out.
+        string logout_uri = 1;
+        // If true, the user will be asked to confirm logout.
+        string extra_query_params = 2;
+    }
+
+    FrontChannelLogout front_channel_logout = 28;
 }
 
 message PlainOAuth2 {
@@ -1863,7 +1871,16 @@ message ExtAuthConfig {
             // To turn on Redis user session caching, use the `userSessionConfig` field.
             RedisOptions claims_caching_options = 4;
         }
-        string front_channel_logout_uri = 28;
+
+        message FrontChannelLogout {
+            // If set, the front channel logout endpoint will be used to log out the user.
+            // This is the URL that the user will be redirected to after logging out.
+            string logout_uri = 1;
+            // If true, the user will be asked to confirm logout.
+            string extra_query_params = 2;
+        }
+    
+        FrontChannelLogout front_channel_logout = 28;
     }
 
     message AccessTokenValidationConfig {

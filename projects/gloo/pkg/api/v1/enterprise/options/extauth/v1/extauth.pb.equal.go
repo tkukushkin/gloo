@@ -1509,8 +1509,14 @@ func (m *OidcAuthorizationCode) Equal(that interface{}) bool {
 		}
 	}
 
-	if strings.Compare(m.GetFrontChannelLogoutUri(), target.GetFrontChannelLogoutUri()) != 0 {
-		return false
+	if h, ok := interface{}(m.GetFrontChannelLogout()).(equality.Equalizer); ok {
+		if !h.Equal(target.GetFrontChannelLogout()) {
+			return false
+		}
+	} else {
+		if !proto.Equal(m.GetFrontChannelLogout(), target.GetFrontChannelLogout()) {
+			return false
+		}
 	}
 
 	switch m.Provider.(type) {
@@ -4372,6 +4378,38 @@ func (m *OidcAuthorizationCode_Azure) Equal(that interface{}) bool {
 }
 
 // Equal function
+func (m *OidcAuthorizationCode_FrontChannelLogout) Equal(that interface{}) bool {
+	if that == nil {
+		return m == nil
+	}
+
+	target, ok := that.(*OidcAuthorizationCode_FrontChannelLogout)
+	if !ok {
+		that2, ok := that.(OidcAuthorizationCode_FrontChannelLogout)
+		if ok {
+			target = &that2
+		} else {
+			return false
+		}
+	}
+	if target == nil {
+		return m == nil
+	} else if m == nil {
+		return false
+	}
+
+	if strings.Compare(m.GetLogoutUri(), target.GetLogoutUri()) != 0 {
+		return false
+	}
+
+	if strings.Compare(m.GetExtraQueryParams(), target.GetExtraQueryParams()) != 0 {
+		return false
+	}
+
+	return true
+}
+
+// Equal function
 func (m *OidcAuthorizationCode_ClientAuthentication_ClientSecret) Equal(that interface{}) bool {
 	if that == nil {
 		return m == nil
@@ -5391,8 +5429,14 @@ func (m *ExtAuthConfig_OidcAuthorizationCodeConfig) Equal(that interface{}) bool
 		}
 	}
 
-	if strings.Compare(m.GetFrontChannelLogoutUri(), target.GetFrontChannelLogoutUri()) != 0 {
-		return false
+	if h, ok := interface{}(m.GetFrontChannelLogout()).(equality.Equalizer); ok {
+		if !h.Equal(target.GetFrontChannelLogout()) {
+			return false
+		}
+	} else {
+		if !proto.Equal(m.GetFrontChannelLogout(), target.GetFrontChannelLogout()) {
+			return false
+		}
 	}
 
 	switch m.Provider.(type) {
@@ -6817,6 +6861,38 @@ func (m *ExtAuthConfig_OidcAuthorizationCodeConfig_Azure) Equal(that interface{}
 		if !proto.Equal(m.GetClaimsCachingOptions(), target.GetClaimsCachingOptions()) {
 			return false
 		}
+	}
+
+	return true
+}
+
+// Equal function
+func (m *ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout) Equal(that interface{}) bool {
+	if that == nil {
+		return m == nil
+	}
+
+	target, ok := that.(*ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout)
+	if !ok {
+		that2, ok := that.(ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout)
+		if ok {
+			target = &that2
+		} else {
+			return false
+		}
+	}
+	if target == nil {
+		return m == nil
+	} else if m == nil {
+		return false
+	}
+
+	if strings.Compare(m.GetLogoutUri(), target.GetLogoutUri()) != 0 {
+		return false
+	}
+
+	if strings.Compare(m.GetExtraQueryParams(), target.GetExtraQueryParams()) != 0 {
+		return false
 	}
 
 	return true
