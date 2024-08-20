@@ -49,4 +49,4 @@ runs:
     uses: actions/upload-artifact@v4
     with:
       name: go-test-summary-${{ inputs.cluster-name }}
-      path: ./_test/test_output/go-test-summary
+      path: ./_test/test_log/go-test-summary
