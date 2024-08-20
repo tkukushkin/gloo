@@ -29,9 +29,10 @@ type event struct {
 // This will also output a list of all leaf-node tests ran to produce the output.
 // This can be used to determine if a new test was properly run or not.
 func main() {
-	var logFile string
+	var logFile, outFile string
 	var jsonOutput bool
 	flag.StringVar(&logFile, "log-file", "./_test/test_log/go-test", "point to the raw string log output of go test command")
+	flag.StringVar(&outFile, "out-file", "./_test/test_log/go-test-summary", "where to place the output summary file")
 	flag.BoolVar(&jsonOutput, "json", false, "output as json")
 	flag.Parse()
 
@@ -54,8 +55,9 @@ func main() {
 
 	leafNodeResults := selectLeafNodes(resultEvents)
 
-	printResults(leafNodeResults, jsonOutput)
+	output := printResults(leafNodeResults, jsonOutput)
 
+	writeResults(output, outFile)
 }
 
 func readTestOutput(fname string) ([]byte, error) {
@@ -126,10 +128,9 @@ func selectLeafNodes(events []*event) []*event {
 	return result
 }
 
-func printResults(events []*event, jsonOutput bool) {
+func printResults(events []*event, jsonOutput bool) []byte {
 	if jsonOutput {
-		printJson(events)
-		return
+		return printJson(events)
 	}
 	out := &bytes.Buffer{}
 	for _, ev := range events {
@@ -137,9 +138,11 @@ func printResults(events []*event, jsonOutput bool) {
 		out.WriteString(evStr)
 	}
 
-	os.Stdout.Write(out.Bytes())
+	b := out.Bytes()
+	os.Stdout.Write(b)
+	return b
 }
-func printJson(events []*event) {
+func printJson(events []*event) []byte {
 	b, err := json.Marshal(events)
 	if err != nil {
 		log.Fatal(err)
@@ -147,4 +150,11 @@ func printJson(events []*event) {
 
 	os.Stdout.Write(b)
 
+	return b
+}
+
+func writeResults(output []byte, filename string) {
+	if err := os.WriteFile(filename, output, os.ModePerm); err != nil {
+		log.Fatal(err)
+	}
 }
