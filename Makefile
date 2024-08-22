@@ -1190,12 +1190,12 @@ build-test-chart: ## Build the Helm chart and place it in the _test directory
 CONFORMANCE_ARGS ?= -gateway-class=gloo-gateway -skip-tests=HTTPRouteServiceTypes -supported-features=Gateway,ReferenceGrant,HTTPRoute,HTTPRouteQueryParamMatching,HTTPRouteMethodMatching,HTTPRouteResponseHeaderModification,HTTPRoutePortRedirect,HTTPRouteHostRewrite,HTTPRouteSchemeRedirect,HTTPRoutePathRedirect,HTTPRouteHostRewrite,HTTPRoutePathRewrite,HTTPRouteRequestMirror
 
 .PHONY: conformance ## Run the conformance test suite
-conformance: $(TEST_ASSET_DIR)/conformance/conformance_test.go
+conformance:
 	go test -ldflags=$(LDFLAGS) ./test/conformance -args $(CONFORMANCE_ARGS)
 
 # Run only the specified conformance test. The name must correspond to the ShortName of one of the k8s gateway api
 # conformance tests.
-conformance-%: $(TEST_ASSET_DIR)/conformance/conformance_test.go
+conformance-%:
 	go test -ldflags=$(LDFLAGS) ./test/conformance -args $(CONFORMANCE_ARGS) \
 	-run-test=$*
 
