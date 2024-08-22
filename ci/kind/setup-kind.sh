@@ -36,6 +36,9 @@ function create_kind_cluster_or_skip() {
 
   # Install cilium as we need to define custom network policies to simulate kube api server unavailability
   # in some of our kube2e tests
+  #
+  # TODO(tim): why are we installing this for all clusters though? the use case
+  # is only for chaos testing, so we should only install it for those tests.
   helm repo add cilium-setup-kind https://helm.cilium.io/
   helm repo update
   helm install cilium cilium-setup-kind/cilium --version $CILIUM_VERSION \
@@ -75,7 +78,7 @@ fi
 make -s build-cli-local
 
 # 5. Apply the Kubernetes Gateway API CRDs
-kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/standard-install.yaml
 
 # 6. Conformance test setup
 if [[ $CONFORMANCE == "true" ]]; then
