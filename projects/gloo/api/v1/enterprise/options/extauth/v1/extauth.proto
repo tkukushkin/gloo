@@ -864,7 +864,7 @@ message OidcAuthorizationCode {
         string path=1;
     }
 
-    string front_channel_logout_path = 28;
+    FrontChannelLogout front_channel_logout = 28;
 }
 
 message PlainOAuth2 {
@@ -1870,7 +1870,13 @@ message ExtAuthConfig {
             RedisOptions claims_caching_options = 4;
         }
 
-        string front_channel_logout_path = 28;
+       // For the moment this is just path, but we may want to configure things like iss/sid validation
+        message FrontChannelLogout {
+            // Path to use for front channel logout. Should not be the same as logout or callback paths.
+            string path=1;
+        }
+
+        FrontChannelLogout front_channel_logout = 28;
     }
 
     message AccessTokenValidationConfig {

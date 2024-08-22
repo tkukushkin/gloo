@@ -1694,8 +1694,24 @@ func (m *OidcAuthorizationCode) Hash(hasher hash.Hash64) (uint64, error) {
 		}
 	}
 
-	if _, err = hasher.Write([]byte(m.GetFrontChannelLogoutPath())); err != nil {
-		return 0, err
+	if h, ok := interface{}(m.GetFrontChannelLogout()).(safe_hasher.SafeHasher); ok {
+		if _, err = hasher.Write([]byte("FrontChannelLogout")); err != nil {
+			return 0, err
+		}
+		if _, err = h.Hash(hasher); err != nil {
+			return 0, err
+		}
+	} else {
+		if fieldValue, err := hashstructure.Hash(m.GetFrontChannelLogout(), nil); err != nil {
+			return 0, err
+		} else {
+			if _, err = hasher.Write([]byte("FrontChannelLogout")); err != nil {
+				return 0, err
+			}
+			if err := binary.Write(hasher, binary.LittleEndian, fieldValue); err != nil {
+				return 0, err
+			}
+		}
 	}
 
 	switch m.Provider.(type) {
@@ -6005,8 +6021,24 @@ func (m *ExtAuthConfig_OidcAuthorizationCodeConfig) Hash(hasher hash.Hash64) (ui
 		}
 	}
 
-	if _, err = hasher.Write([]byte(m.GetFrontChannelLogoutPath())); err != nil {
-		return 0, err
+	if h, ok := interface{}(m.GetFrontChannelLogout()).(safe_hasher.SafeHasher); ok {
+		if _, err = hasher.Write([]byte("FrontChannelLogout")); err != nil {
+			return 0, err
+		}
+		if _, err = h.Hash(hasher); err != nil {
+			return 0, err
+		}
+	} else {
+		if fieldValue, err := hashstructure.Hash(m.GetFrontChannelLogout(), nil); err != nil {
+			return 0, err
+		} else {
+			if _, err = hasher.Write([]byte("FrontChannelLogout")); err != nil {
+				return 0, err
+			}
+			if err := binary.Write(hasher, binary.LittleEndian, fieldValue); err != nil {
+				return 0, err
+			}
+		}
 	}
 
 	switch m.Provider.(type) {
@@ -7603,6 +7635,26 @@ func (m *ExtAuthConfig_OidcAuthorizationCodeConfig_Azure) Hash(hasher hash.Hash6
 				return 0, err
 			}
 		}
+	}
+
+	return hasher.Sum64(), nil
+}
+
+// Hash function
+func (m *ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout) Hash(hasher hash.Hash64) (uint64, error) {
+	if m == nil {
+		return 0, nil
+	}
+	if hasher == nil {
+		hasher = fnv.New64()
+	}
+	var err error
+	if _, err = hasher.Write([]byte("enterprise.gloo.solo.io.github.com/solo-io/gloo/projects/gloo/pkg/api/v1/enterprise/options/extauth/v1.ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout")); err != nil {
+		return 0, err
+	}
+
+	if _, err = hasher.Write([]byte(m.GetPath())); err != nil {
+		return 0, err
 	}
 
 	return hasher.Sum64(), nil

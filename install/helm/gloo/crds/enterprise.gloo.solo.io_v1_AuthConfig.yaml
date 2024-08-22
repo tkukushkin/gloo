@@ -649,8 +649,11 @@ spec:
                                   type: string
                                   x-kubernetes-int-or-string: true
                               type: object
-                            frontChannelLogoutPath:
-                              type: string
+                            frontChannelLogout:
+                              properties:
+                                path:
+                                  type: string
+                              type: object
                             headers:
                               properties:
                                 accessTokenHeader:

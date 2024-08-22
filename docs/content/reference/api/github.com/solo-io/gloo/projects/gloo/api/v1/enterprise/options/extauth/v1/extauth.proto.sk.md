@@ -109,6 +109,7 @@ weight: 5
 - [IdentityToken](#identitytoken)
 - [Default](#default)
 - [Azure](#azure)
+- [FrontChannelLogout](#frontchannellogout)
 - [AccessTokenValidationConfig](#accesstokenvalidationconfig)
 - [JwtValidation](#jwtvalidation)
 - [RemoteJwks](#remotejwks)
@@ -1059,7 +1060,7 @@ Map a single claim from an OAuth2 or OIDC token to a header in the request to th
 "clientAuthentication": .enterprise.gloo.solo.io.OidcAuthorizationCode.ClientAuthentication
 "default": .enterprise.gloo.solo.io.OidcAuthorizationCode.Default
 "azure": .enterprise.gloo.solo.io.OidcAuthorizationCode.Azure
-"frontChannelLogoutPath": string
+"frontChannelLogout": .enterprise.gloo.solo.io.OidcAuthorizationCode.FrontChannelLogout
 
 ```
 
@@ -1091,7 +1092,7 @@ Map a single claim from an OAuth2 or OIDC token to a header in the request to th
 | `clientAuthentication` | [.enterprise.gloo.solo.io.OidcAuthorizationCode.ClientAuthentication](../extauth.proto.sk/#clientauthentication) | +kubebuilder:validation:XValidation:rule="has(self.clientSecret) || has(self.privateKeyJwt)",message="Must specify clientSecret or privateKeyJwt". |
 | `default` | [.enterprise.gloo.solo.io.OidcAuthorizationCode.Default](../extauth.proto.sk/#default) |  Only one of `default` or `azure` can be set. |
 | `azure` | [.enterprise.gloo.solo.io.OidcAuthorizationCode.Azure](../extauth.proto.sk/#azure) |  Only one of `azure` or `default` can be set. |
-| `frontChannelLogoutPath` | `string` |  |
+| `frontChannelLogout` | [.enterprise.gloo.solo.io.OidcAuthorizationCode.FrontChannelLogout](../extauth.proto.sk/#frontchannellogout) |  |
 
 
 
@@ -1249,7 +1250,7 @@ For the moment this is just path, but we may want to configure things like iss/s
 
 | Field | Type | Description |
 | ----- | ---- | ----------- | 
-| `path` | `string` |  |
+| `path` | `string` | Path to use for front channel logout. Should not be the same as logout or callback paths. |
 
 
 
@@ -2298,7 +2299,7 @@ Deprecated, prefer OAuth2Config
 "identityToken": .enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.IdentityToken
 "default": .enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.Default
 "azure": .enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.Azure
-"frontChannelLogoutPath": string
+"frontChannelLogout": .enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.FrontChannelLogout
 
 ```
 
@@ -2329,7 +2330,7 @@ Deprecated, prefer OAuth2Config
 | `identityToken` | [.enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.IdentityToken](../extauth.proto.sk/#identitytoken) | Optional: Configuration specific to the OIDC identity token received and processed by the ext-auth-service. |
 | `default` | [.enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.Default](../extauth.proto.sk/#default) |  Only one of `default` or `azure` can be set. |
 | `azure` | [.enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.Azure](../extauth.proto.sk/#azure) |  Only one of `azure` or `default` can be set. |
-| `frontChannelLogoutPath` | `string` |  |
+| `frontChannelLogout` | [.enterprise.gloo.solo.io.ExtAuthConfig.OidcAuthorizationCodeConfig.FrontChannelLogout](../extauth.proto.sk/#frontchannellogout) |  |
 
 
 
@@ -2449,6 +2450,24 @@ This way, you can enable distibuted claims and caching for when users are member
 | `tenantId` | `string` | The tenant ID represents the MS Entra organization ID where the ExtAuthService app is registered. This tenant ID may or may not be the same as in the top level `OidcAuthorizationCodeConfig`, depending on how your Azure account is provisioned. |
 | `clientSecret` | `string` | The client secret of the ExtAuthService app that is registered with MS Entra to communciate with the MS Graph API. |
 | `claimsCachingOptions` | [.enterprise.gloo.solo.io.RedisOptions](../extauth.proto.sk/#redisoptions) | Redis connection details to cache MS Entera claims. This way, you avoid performance issues of accessing the Microsoft Graph API too many times. Note that this setting does NOT turn on Redis caching for the user session. To turn on Redis user session caching, use the `userSessionConfig` field. |
+
+
+
+
+---
+### FrontChannelLogout
+
+ 
+For the moment this is just path, but we may want to configure things like iss/sid validation
+
+```yaml
+"path": string
+
+```
+
+| Field | Type | Description |
+| ----- | ---- | ----------- | 
+| `path` | `string` | Path to use for front channel logout. Should not be the same as logout or callback paths. |
 
 
 

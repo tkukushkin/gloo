@@ -896,7 +896,11 @@ func (m *OidcAuthorizationCode) Clone() proto.Message {
 		target.ClientAuthentication = proto.Clone(m.GetClientAuthentication()).(*OidcAuthorizationCode_ClientAuthentication)
 	}
 
-	target.FrontChannelLogoutPath = m.GetFrontChannelLogoutPath()
+	if h, ok := interface{}(m.GetFrontChannelLogout()).(clone.Cloner); ok {
+		target.FrontChannelLogout = h.Clone().(*OidcAuthorizationCode_FrontChannelLogout)
+	} else {
+		target.FrontChannelLogout = proto.Clone(m.GetFrontChannelLogout()).(*OidcAuthorizationCode_FrontChannelLogout)
+	}
 
 	switch m.Provider.(type) {
 
@@ -3184,7 +3188,11 @@ func (m *ExtAuthConfig_OidcAuthorizationCodeConfig) Clone() proto.Message {
 		target.IdentityToken = proto.Clone(m.GetIdentityToken()).(*ExtAuthConfig_OidcAuthorizationCodeConfig_IdentityToken)
 	}
 
-	target.FrontChannelLogoutPath = m.GetFrontChannelLogoutPath()
+	if h, ok := interface{}(m.GetFrontChannelLogout()).(clone.Cloner); ok {
+		target.FrontChannelLogout = h.Clone().(*ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout)
+	} else {
+		target.FrontChannelLogout = proto.Clone(m.GetFrontChannelLogout()).(*ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout)
+	}
 
 	switch m.Provider.(type) {
 
@@ -4045,6 +4053,19 @@ func (m *ExtAuthConfig_OidcAuthorizationCodeConfig_Azure) Clone() proto.Message 
 	} else {
 		target.ClaimsCachingOptions = proto.Clone(m.GetClaimsCachingOptions()).(*RedisOptions)
 	}
+
+	return target
+}
+
+// Clone function
+func (m *ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout) Clone() proto.Message {
+	var target *ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout
+	if m == nil {
+		return target
+	}
+	target = &ExtAuthConfig_OidcAuthorizationCodeConfig_FrontChannelLogout{}
+
+	target.Path = m.GetPath()
 
 	return target
 }
