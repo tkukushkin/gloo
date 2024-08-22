@@ -4372,6 +4372,34 @@ func (m *OidcAuthorizationCode_Azure) Equal(that interface{}) bool {
 }
 
 // Equal function
+func (m *OidcAuthorizationCode_FrontChannelLogout) Equal(that interface{}) bool {
+	if that == nil {
+		return m == nil
+	}
+
+	target, ok := that.(*OidcAuthorizationCode_FrontChannelLogout)
+	if !ok {
+		that2, ok := that.(OidcAuthorizationCode_FrontChannelLogout)
+		if ok {
+			target = &that2
+		} else {
+			return false
+		}
+	}
+	if target == nil {
+		return m == nil
+	} else if m == nil {
+		return false
+	}
+
+	if strings.Compare(m.GetPath(), target.GetPath()) != 0 {
+		return false
+	}
+
+	return true
+}
+
+// Equal function
 func (m *OidcAuthorizationCode_ClientAuthentication_ClientSecret) Equal(that interface{}) bool {
 	if that == nil {
 		return m == nil

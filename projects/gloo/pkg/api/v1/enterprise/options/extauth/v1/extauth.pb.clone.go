@@ -2595,6 +2595,19 @@ func (m *OidcAuthorizationCode_Azure) Clone() proto.Message {
 }
 
 // Clone function
+func (m *OidcAuthorizationCode_FrontChannelLogout) Clone() proto.Message {
+	var target *OidcAuthorizationCode_FrontChannelLogout
+	if m == nil {
+		return target
+	}
+	target = &OidcAuthorizationCode_FrontChannelLogout{}
+
+	target.Path = m.GetPath()
+
+	return target
+}
+
+// Clone function
 func (m *OidcAuthorizationCode_ClientAuthentication_ClientSecret) Clone() proto.Message {
 	var target *OidcAuthorizationCode_ClientAuthentication_ClientSecret
 	if m == nil {

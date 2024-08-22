@@ -4881,6 +4881,26 @@ func (m *OidcAuthorizationCode_Azure) Hash(hasher hash.Hash64) (uint64, error) {
 }
 
 // Hash function
+func (m *OidcAuthorizationCode_FrontChannelLogout) Hash(hasher hash.Hash64) (uint64, error) {
+	if m == nil {
+		return 0, nil
+	}
+	if hasher == nil {
+		hasher = fnv.New64()
+	}
+	var err error
+	if _, err = hasher.Write([]byte("enterprise.gloo.solo.io.github.com/solo-io/gloo/projects/gloo/pkg/api/v1/enterprise/options/extauth/v1.OidcAuthorizationCode_FrontChannelLogout")); err != nil {
+		return 0, err
+	}
+
+	if _, err = hasher.Write([]byte(m.GetPath())); err != nil {
+		return 0, err
+	}
+
+	return hasher.Sum64(), nil
+}
+
+// Hash function
 func (m *OidcAuthorizationCode_ClientAuthentication_ClientSecret) Hash(hasher hash.Hash64) (uint64, error) {
 	if m == nil {
 		return 0, nil
