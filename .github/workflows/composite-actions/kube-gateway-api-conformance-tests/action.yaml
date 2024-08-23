@@ -56,7 +56,7 @@ runs:
     run: |
       # Default to the standard profile if none is provided. Otherwise,
       # assume the profile is experimental.
-      if [[ -z ${{ matrix.profile }} ]]; then
+      if [[ -z ${{ matrix.profile }} || ${{ matrix.profile }} == "standard" ]]; then
         make conformance
       else
         make conformance-experimental
