@@ -1187,6 +1187,11 @@ build-test-chart: ## Build the Helm chart and place it in the _test directory
 # Targets for running Kubernetes Gateway API conformance tests
 #----------------------------------------------------------------------------------
 
+CONFORMANCE_ARTIFACTS_DIR := $(TEST_ASSET_DIR)/conformance
+$(CONFORMANCE_ARTIFACTS_DIR):
+	mkdir -p $(CONFORMANCE_ARTIFACTS_DIR)
+
+
 CONFORMANCE_ARGS ?= -gateway-class=gloo-gateway -skip-tests=HTTPRouteServiceTypes -supported-features=Gateway,ReferenceGrant,HTTPRoute,HTTPRouteQueryParamMatching,HTTPRouteMethodMatching,HTTPRouteResponseHeaderModification,HTTPRoutePortRedirect,HTTPRouteHostRewrite,HTTPRouteSchemeRedirect,HTTPRoutePathRedirect,HTTPRouteHostRewrite,HTTPRoutePathRewrite,HTTPRouteRequestMirror
 
 .PHONY: conformance ## Run the conformance test suite
@@ -1200,8 +1205,8 @@ conformance-%:
 	-run-test=$*
 
 .PHONY: conformance-experimental ## Run the extended conformance test suite
-conformance-experimental: CONFORMANCE_ARGS += -conformance-profiles=GATEWAY-HTTP -report-output=$(TEST_ASSET_DIR)/conformance/$(VERSION)-report.yaml -organization=solo.io -project=gloo-gateway -version=$(VERSION) -url=github.com/solo-io/gloo -contact=github.com/solo-io/gloo/issues/new/choose
-conformance-experimental:
+conformance-experimental: CONFORMANCE_ARGS += -conformance-profiles=GATEWAY-HTTP -report-output=$(CONFORMANCE_ARTIFACTS_DIR)/$(VERSION)-report.yaml -organization=solo.io -project=gloo-gateway -version=$(VERSION) -url=github.com/solo-io/gloo -contact=github.com/solo-io/gloo/issues/new/choose
+conformance-experimental: $(CONFORMANCE_ARTIFACTS_DIR)
 	go test -ldflags=$(LDFLAGS) ./test/conformance -args $(CONFORMANCE_ARGS)
 
 #----------------------------------------------------------------------------------
