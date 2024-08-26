@@ -132,7 +132,7 @@ func (t *tree) insertRec(n *node, p *pathWithEvent) *node {
 	if len(p.path) == 0 {
 		return n
 	}
-	if t.root == nil || n == nil {
+	if n == nil {
 		panic("nil node at " + p.path[0])
 	}
 
