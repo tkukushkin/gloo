@@ -169,7 +169,7 @@ func requestProxiesFromControlPlane(opts *options.Options, request *debug.ProxyE
 		retry.LastErrorOnly(true),
 		retry.Delay(100*time.Millisecond),
 		retry.DelayType(retry.BackOffDelay),
-		retry.Attempts(5),
+		retry.Attempts(10),
 	)
 
 	if requestErr != nil {
